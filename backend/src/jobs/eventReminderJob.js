@@ -1,6 +1,6 @@
 // src/jobs/eventReminderJob.js
 import cron from "node-cron";
-import Event from "../models/Event.js";
+import Event from "../models/event.models.js";
 import { sendEmail } from "../utils/sendemail.js";
 import { reminderTemplate } from "../templates/reminder.js";
 

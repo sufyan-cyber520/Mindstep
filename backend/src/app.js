@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import "./src/jobs/eventReminderJob.js"
+import "./jobs/eventReminderJob.js"
 
 const app = express();
 
