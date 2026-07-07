@@ -16,7 +16,7 @@ import upload from '../middleware/upload.js';
 const router = express.Router();
 
 router.post("/signup", signup);
-router.post("/login", login);
+// router.post("/login", login);
 router.post("/logout", verifyJWT, logout);
 
 router.post(
@@ -51,4 +51,12 @@ router.get("/test", (req, res) => {
 
 router.get("/login", (req, res) => {
   res.json({ message: "Login route exists" });
+});
+
+
+router.post("/login", (req, res) => {
+  res.json({
+    success: true,
+    body: req.body
+  });
 });
