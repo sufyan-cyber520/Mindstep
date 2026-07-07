@@ -329,19 +329,21 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <motion.button
-              className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl flex items-center gap-2 text-lg font-semibold"
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Start Free Test
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <ArrowRight className="w-5 h-5" />
-              </motion.div>
-            </motion.button>
+            <Link to="/auth">
+  <motion.button
+    className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition shadow-lg hover:shadow-xl flex items-center gap-2 text-lg font-semibold"
+    whileHover={{ scale: 1.05, y: -3 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    Start Free Test
+    <motion.div
+      animate={{ x: [0, 5, 0] }}
+      transition={{ duration: 1.5, repeat: Infinity }}
+    >
+      <ArrowRight className="w-5 h-5" />
+    </motion.div>
+  </motion.button>
+</Link>
             <Link to="/demo">
               <motion.button
                 className={`px-8 py-4 ${
