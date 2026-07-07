@@ -45,17 +45,13 @@ export default function Auth() {
     show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!email || !password || (!isLogin && !name)) {
-      alert("Please fill all required fields");
-      return;
-    }
-
-    // Admin Check - Special Password
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
   e.preventDefault();
+
+  if (!email || !password || (!isLogin && !name)) {
+    alert("Please fill all required fields");
+    return;
+  }
 
   try {
     if (isLogin) {
@@ -66,13 +62,13 @@ export default function Auth() {
 
       localStorage.setItem(
         "user",
-        JSON.stringify(res.data.user || res.data.data)
+        JSON.stringify(res.data.data.user)
       );
 
       window.location.href = "/dashboard";
     } else {
       await api.post("/signup", {
-        name,
+        username: name,
         email,
         password,
       });
@@ -88,8 +84,7 @@ export default function Auth() {
       "Something went wrong"
     );
   }
-}
-  };
+};
 
   return (
     <div
