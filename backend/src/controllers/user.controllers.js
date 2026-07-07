@@ -90,7 +90,14 @@ const signup =asyncHandler( async(req, res) =>{
 
 
 const login = asyncHandler(async (req,res) => {
-      const {email,password}= req.body;
+
+  console.log("========== LOGIN HIT ==========");
+  console.log("Request Body:", req.body);
+
+  const {email,password}= req.body;
+
+  // baaki tumhara existing code...
+      
       // 1. Validate input
     if (!email || !password) {
     throw new ApiError(400, "Email and password are required");
