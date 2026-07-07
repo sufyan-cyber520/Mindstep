@@ -7,8 +7,11 @@ import "./jobs/eventReminderJob.js"
 const app = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
+  origin: [
+    "https://mindstepsufyan.netlify.app",
+    "https://benevolent-liger-1f5b2c.netlify.app"
+  ],
+  credentials: true
 }));
 
 app.use(express.json({ limit: "16kb" }));
