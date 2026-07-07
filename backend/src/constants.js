@@ -1,1 +1,1 @@
-export const DB_NAME="vimal05"
+export const DB_NAME = "mindstep";
