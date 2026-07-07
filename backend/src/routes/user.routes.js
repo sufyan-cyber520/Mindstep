@@ -37,3 +37,12 @@ router.put(
 );
 
 export default router;
+
+
+
+router.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "Auth routes loaded"
+  });
+});
