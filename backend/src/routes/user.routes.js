@@ -1,35 +1,39 @@
 import express from 'express';
-import {signup,
+
+import {
+  signup,
   login,
   logout,
-  updateAvatar} from '../controllers/user.controllers.js';
-  import { getMe,updateAvatar,updateProfile } from '../controllers/user.controllers.js';
+  updateAvatar,
+  getMe,
+  updateProfile,
+  uploadProfilePic
+} from '../controllers/user.controllers.js';
 
-  import { verifyJWT } from '../middleware/auth.js';
+import { verifyJWT } from '../middleware/auth.js';
+import upload from '../middleware/upload.js';
 
-  import { uploadProfilePic } from '../controllers/user.controllers.js';
+const router = express.Router();
 
-  import upload from '../middleware/upload.js'
-
-  const router= express.Router();
-
-  router.post("/signup", signup);
-
-// Login route
+router.post("/signup", signup);
 router.post("/login", login);
-
-// Logout route (protected, only logged-in users can logout)
 router.post("/logout", verifyJWT, logout);
 
-// upload profile picture
+router.post(
+  "/upload-profile-pic/:id",
+  upload.single("profilePic"),
+  uploadProfilePic
+);
 
-router.post("/upload-profile-pic/:id", upload.single("profilePic"), uploadProfilePic);
+router.get("/me", verifyJWT, getMe);
 
-router.get("/me", verifyJWT,getMe);
+router.put("/update", verifyJWT, updateProfile);
 
-router.put("update",verifyJWT,uploadProfilePic);
-
-router.put("/update-avatar", verifyJWT,upload.single("avatar"),updateAvatar)
+router.put(
+  "/update-avatar",
+  verifyJWT,
+  upload.single("avatar"),
+  updateAvatar
+);
 
 export default router;
-
