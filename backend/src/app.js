@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "https://mindstepsufyan.netlify.app",
+    
     "https://benevolent-liger-1f5b2c.netlify.app"
   ],
   credentials: true
@@ -30,3 +30,7 @@ app.use("/api/notes", noteRoutes);
 
 
 export { app };
+
+app.get("/", (req, res) => {
+  res.send("Backend Running");
+});
