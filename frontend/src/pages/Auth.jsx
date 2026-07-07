@@ -1,3 +1,4 @@
+import api from "../api";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -53,26 +54,41 @@ export default function Auth() {
     }
 
     // Admin Check - Special Password
-    const ADMIN_PASSWORD = "VK0195";
-    const isAdmin = password === ADMIN_PASSWORD;
+    const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const user = {
-      email,
-      name: isLogin ? name || email.split("@")[0] : name,
-      plan: isAdmin ? "admin" : "free",
-      role: isAdmin ? "admin" : "user",
-      loggedAt: Date.now(),
-    };
+  try {
+    if (isLogin) {
+      const res = await api.post("/login", {
+        email,
+        password,
+      });
 
-    localStorage.setItem("user", JSON.stringify(user));
-
-    if (isAdmin) {
-      alert(
-        "🎉 Welcome Admin! You have access to both Free & Premium features!"
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user || res.data.data)
       );
-    }
 
-    window.location.href = "/dashboard";
+      window.location.href = "/dashboard";
+    } else {
+      await api.post("/signup", {
+        name,
+        email,
+        password,
+      });
+
+      alert("Signup successful");
+      setIsLogin(true);
+    }
+  } catch (error) {
+    console.error(error);
+
+    alert(
+      error?.response?.data?.message ||
+      "Something went wrong"
+    );
+  }
+}
   };
 
   return (
