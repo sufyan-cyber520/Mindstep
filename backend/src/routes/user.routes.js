@@ -46,3 +46,9 @@ router.get("/test", (req, res) => {
     message: "Auth routes loaded"
   });
 });
+
+
+
+router.get("/login", (req, res) => {
+  res.json({ message: "Login route exists" });
+});
