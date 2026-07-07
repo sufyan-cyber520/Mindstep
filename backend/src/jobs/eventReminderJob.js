@@ -1,22 +1,22 @@
-// src/jobs/eventReminderJob.js
 import cron from "node-cron";
 import { Event } from "../models/event.models.js";
-import { sendEmail } from "../utils/sendemail.js";
+import sendEmail from "../utils/sendemail.js";
 import { reminderTemplate } from "../templates/reminder.js";
 
-cron.schedule("0 0 * * *", async () => {   // daily midnight
+cron.schedule("0 0 * * *", async () => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  // Sare events jo kal ke liye scheduled hain
-  const events = await Event.find({ date: tomorrow });
+  const events = await Event.find({ date: tomorrow }).populate("userId");
 
   for (const event of events) {
-    await sendEmail(
-      event.user.email,
-      "Event Reminder",
-      reminderTemplate(event)
-    );
+    if (!event.userId?.email) continue;
+
+    await sendEmail({
+      to: event.userId.email,
+      subject: "Event Reminder",
+      html: reminderTemplate(event)
+    });
   }
 
   console.log("✅ Reminder emails sent for tomorrow’s events");

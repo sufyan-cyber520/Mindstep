@@ -3,7 +3,7 @@ import {User} from '../models/user.models.js'
 import {asyncHandler}from '../utils/asyncHandler.js';
 import {ApiError} from '../utils/ApiError.js';
 import {ApiResponse} from '../utils/ApiResponse.js';
-import {sendEmail} from '../utils/sendemail.js';
+import sendEmail from '../utils/sendemail.js';
 
 import { welcomeTemplate } from '../templates/welcome.js';
 
@@ -59,13 +59,19 @@ const signup =asyncHandler( async(req, res) =>{
 
   // send welocme email
 
-    try {
-    await sendEmail(user.email, "Welcome to Mindstep 🎉", welcomeTemplate);
-    console.log("✅ Welcome email sent to:", user.email);
-  } catch (err) {
-    console.error("❌ Error sending welcome email:", err);
+   try {
+  await sendEmail({
+    to: user.email,
+    subject: "Welcome to Mindstep 🎉",
+    html: welcomeTemplate
+  });
+
+  console.log("✅ Welcome email sent to:", user.email);
+} catch (err) {
+  console.error("❌ Error sending welcome email:", err);
+}
     // Note: Don't throw error here, signup should still succeed
-  }
+  
 
   // 5. Response (never send password)
   return res.status(201).json(
